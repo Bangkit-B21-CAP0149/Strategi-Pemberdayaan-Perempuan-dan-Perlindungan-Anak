@@ -1,7 +1,7 @@
 import datetime
 from flask import request, jsonify, escape, Response
 from sna.helper.VRClassifier import VRClassifier
-from snahelper.encoder import JSONEncoder
+from sna.helper.encoder import JSONEncoder
 from sna.db.Mongo import Database as MongoDB
 from flask_cors import cross_origin
 from flask import current_app as app
