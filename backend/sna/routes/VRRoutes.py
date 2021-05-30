@@ -1,10 +1,10 @@
 import datetime
+from flask import current_app as app
 from flask import request, jsonify, escape, Response
 from sna.helper.VRClassifier import VRClassifier
 from sna.helper.encoder import JSONEncoder
 from sna.db.Mongo import Database as MongoDB
 from flask_cors import cross_origin
-from flask import current_app as app
 
 db = MongoDB()
 classifier = VRClassifier()
@@ -13,13 +13,13 @@ collection = 'reporting_data'
 db.initialize(vr_dump)
 
 @cross_origin
-@app.routes('/vr/list_report')
+@app.route('/vr/list_report')
 def list_report():
     data = db.aggregate(collection)
     return Response(json.dumps({'result': list(data)}, cls=JSONEncoder), mimetype='application/json')
 
 @cross_origin
-@app.routes('/vr/input_report')
+@app.route('/vr/input_report', methods=['POST'])
 def input_report():
     datelog = str(datetime.datetime.now())
     nik = request.args['nik']
