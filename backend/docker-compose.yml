@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/bumn-backend
+    ports:
+    - 5000:5000
+    env_file:
+      - ./.env
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: adminbumnmedia
+      MONGO_INITDB_ROOT_PASSWORD: integratedmediadatabase561
+    ports:
+    - 27017:27017
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile-worker
+    volumes:
+    - ['./sna/task:/task']
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile-scheduler
+
