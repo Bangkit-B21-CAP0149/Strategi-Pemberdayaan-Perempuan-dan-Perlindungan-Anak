@@ -47,5 +47,6 @@ def input_report():
         'short_chronology': sc,
         'risk_level': risk_level
     }
-    db.insert_many(collection, data)
+
+    db.insert(collection, data)
     return Response(json.dumps({'result': list(data)}, cls=JSONEncoder), mimetype='application/json')

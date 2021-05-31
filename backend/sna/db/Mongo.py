@@ -13,7 +13,7 @@ class Database:
 
     @staticmethod
     def insert(collection, data):
-        Database.DATABASE[collection].insert(data)
+        Database.DATABASE[collection].insert_one(data)
 
     @staticmethod
     def insert_many(collection, data):
