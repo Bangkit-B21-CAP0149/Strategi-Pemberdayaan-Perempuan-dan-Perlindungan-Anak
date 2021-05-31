@@ -22,14 +22,14 @@ def list_report():
 @app.route('/vr/input_report', methods=['POST'])
 def input_report():
     datelog = str(datetime.datetime.now())
-    nik = request.form['nik']
-    vt = request.form['violence_type']
-    rel = request.form['relation']
-    vic = request.form['victim_age']
-    ag = request.form['agressor_age']
-    par = request.form['previous_abuse_report']
-    lt = request.form['living_together']
-    sc = request.form['short_chronology']
+    nik = request.args['nik']
+    vt = request.args['violence_type']
+    rel = request.args['relation']
+    vic = request.args['victim_age']
+    ag = request.args['agressor_age']
+    par = request.args['previous_abuse_report']
+    lt = request.args['living_together']
+    sc = request.args['short_chronology']
     report = [(rel, vic, ag, par, lt)]
 
     encoded_report = classifier.encode(report)
