@@ -406,6 +406,8 @@ class Database:
                     'sentiment': '$_id.sentiment',
                     'total_sentiment': '$total'
                 }
+            }, {
+                '$limit': 7
             }
         ]
 

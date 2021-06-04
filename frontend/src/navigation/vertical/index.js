@@ -10,13 +10,13 @@ export default [
     icon: 'FileIcon',
   },
   {
-    title: 'Mention',
+    title: 'Sosmed Analytics',
     route: 'mentions',
     icon: 'MessageCircleIcon',
   },
   {
-    title: 'Ringkasan',
-    route: 'ringkasan',
+    title: 'Violence Report',
+    route: 'vr_report',
     icon: 'FileIcon',
   },
   {

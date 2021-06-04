@@ -8,7 +8,7 @@
       >
         <statistic-card-vertical
           icon="EyeIcon"
-          statistic="36.9k"
+          :statistic="this.abnumber(item.total_mentions)"
           statistic-title="Mentions"
           color="info"
         />
@@ -21,8 +21,8 @@
         <statistic-card-vertical
           color="success"
           icon="ArrowUpRightIcon"
-          statistic="12k"
           statistic-title="Positif"
+          :statistic="this.abnumber(item.total_positif)"
         />
       </b-col>
       <b-col
@@ -33,7 +33,7 @@
         <statistic-card-vertical
           color="danger"
           icon="ArrowDownLeftIcon"
-          statistic="97.8k"
+          :statistic="this.abnumber(item.total_negatif)"
           statistic-title="Negatif"
         />
       </b-col>
@@ -45,7 +45,7 @@
         <statistic-card-vertical
           color="warning"
           icon="ArrowRightIcon"
-          statistic="26.8"
+          :statistic="this.abnumber(item.total_netral)"
           statistic-title="Netral"
         />
       </b-col>
@@ -57,7 +57,7 @@
         <statistic-card-vertical
           color="primary"
           icon="CornerDownRightIcon"
-          statistic="689"
+          :statistic="this.abnumber(item.total_retweet)"
           statistic-title="Retweet"
         />
       </b-col>
@@ -70,8 +70,47 @@
           hide-chart
           color="danger"
           icon="HeartIcon"
-          statistic="2.1k"
+          :statistic="this.abnumber(item.total_likes)"
           statistic-title="Likes"
+        />
+      </b-col>
+      <b-col
+        xl="2"
+        md="4"
+        sm="6"
+      >
+        <statistic-card-vertical
+          hide-chart
+          color="secondary"
+          icon="UsersIcon"
+          :statistic="this.abnumber(item.total_profile)"
+          statistic-title="Total Profile"
+        />
+      </b-col>
+      <b-col
+        xl="2"
+        md="4"
+        sm="6"
+      >
+        <statistic-card-vertical
+          hide-chart
+          color="primary"
+          icon="TwitterIcon"
+          :statistic="this.abnumber(item.total_tweet)"
+          statistic-title="Total Tweet"
+        />
+      </b-col>
+      <b-col
+        xl="2"
+        md="4"
+        sm="6"
+      >
+        <statistic-card-vertical
+          hide-chart
+          color="info"
+          icon="ActivityIcon"
+          :statistic="this.abnumber(item.total_reaction)"
+          statistic-title="Total Reaction"
         />
       </b-col>
     </b-row>
@@ -100,6 +139,7 @@
 
 <script>
 import { BRow, BCol } from 'bootstrap-vue'
+import axios from 'axios'
 import StatisticCardVertical from '@core/components/statistics-cards/StatisticCardVertical.vue'
 import ApexLineChart from './ApexLineChart.vue'
 import TimeLine from './TimeLine.vue'
@@ -116,5 +156,31 @@ export default {
     TimeLine,
     StatisticCardVertical,
   },
+  data() {
+    return {
+      data: null,
+    }
+  },
+  created() {
+    axios
+      .get('http://34.136.214.191:5001/sentiment/summary/palestina')
+      .then(
+        response => {
+          this.item = response.data.result
+        },
+      )
+  },
+  methods: {
+    abnumber(value) {
+      const suffixes = ['', 'k', 'jt', 'm', 't']
+      const suffixNum = Math.floor((`${value}`).length / 3)
+      const shortValue = parseFloat((suffixNum !== 0 ? (value / 1000 ** suffixNum) : value).toPrecision(2))
+      if (shortValue % 1 !== 0) {
+        this.shortValue = shortValue.toFixed(0)
+      }
+      return shortValue + suffixes[suffixNum]
+    },
+  },
 }
+
 </script>

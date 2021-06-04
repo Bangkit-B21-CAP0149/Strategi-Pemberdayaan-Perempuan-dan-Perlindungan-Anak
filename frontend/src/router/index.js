@@ -44,6 +44,20 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/vr_report',
+      name: 'vr_report',
+      component: () => import('@/views/VR/Report.vue'),
+      meta: {
+        pageTitle: 'Violence Report',
+        breadcrumb: [
+          {
+            text: 'Violence Report',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue'),

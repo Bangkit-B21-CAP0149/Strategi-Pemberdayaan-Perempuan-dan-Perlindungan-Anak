@@ -119,7 +119,7 @@ export default {
               ticks: {
                 stepSize: 100,
                 min: 0,
-                max: 400,
+                max: 10000,
                 fontColor: chartColors.labelColor,
               },
               gridLines: {
@@ -150,21 +150,24 @@ export default {
   },
   created() {
     axios
-      .get('http://127.0.0.1:5000/tweet/daytoday?hashtag=bumn')
+      .get('http://34.136.214.191:5001/sentiment/countdailysentiment/palestina')
       .then(
         response => {
           const label = []
           const dataPositive = []
           const dataNegative = []
+          const dataNetral = []
           for (let i = 0; i < response.data.result.length; i += 1) {
             const result = response.data.result[i]
-            if (!label.includes(result.dateLabel)) {
-              label.push(result.dateLabel)
+            if (!label.includes(result.tweet_date)) {
+              label.push(result.tweet_date)
             }
-            if (result.classification_result === 0) {
-              dataNegative.push(parseInt(result.countSentiment, 10))
+            if (result.sentiment === 'negatif') {
+              dataNegative.push(parseInt(result.total_sentiment, 10))
+            } else if (result.sentiment === 'netral') {
+              dataNetral.push(parseInt(result.total_sentiment, 10))
             } else {
-              dataPositive.push(parseInt(result.countSentiment, 10))
+              dataPositive.push(parseInt(result.total_sentiment, 10))
             }
           }
           this.datacollection = {
@@ -211,7 +214,7 @@ export default {
                     pointShadowColor: chartColors.tooltipShadow,
                   },
                   {
-                    data: [80, 99, 82, 90, 115, 115, 74, 75, 130, 155, 125, 90, 140, 130, 180],
+                    data: dataNetral,
                     label: 'Netral',
                     borderColor: chartColors.warningColorShade,
                     lineTension: 0.5,

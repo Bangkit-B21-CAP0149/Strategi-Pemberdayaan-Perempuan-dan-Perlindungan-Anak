@@ -63,14 +63,14 @@ export default {
   },
   created() {
     axios
-      .get('http://127.0.0.1:5000/tweet/countall')
+      .get('http://34.136.214.191:5001/sentiment/tweetbyday/palestina')
       .then(
         response => {
           const label = []
           const counted = []
           for (let i = 0; i < response.data.result.length; i += 1) {
             const result = response.data.result[i]
-            label.push(result.dateLabel)
+            label.push(result.date)
             counted.push(parseInt(result.countall, 10))
           }
           this.datacollection = {

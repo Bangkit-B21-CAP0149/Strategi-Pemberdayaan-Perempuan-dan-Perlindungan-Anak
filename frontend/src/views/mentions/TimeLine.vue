@@ -12,13 +12,13 @@
     <!-- chart -->
     <b-card-body>
       <app-timeline>
-        <app-timeline-item icon="TwitterIcon" v-for="items in item" :key="items.username">
+        <app-timeline-item icon="TwitterIcon" v-for="items in item" :key="items._id">
           <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
-            <h6>{{ items.user_name }}</h6>
-            <small class="text-muted">{{ items.dateLabel }}</small>
+            <h6>{{ items.user_screen_name }}</h6>
+            <small class="text-muted">{{ items.tweet_created_at }}</small>
           </div>
-          <p>{{ items.text.substring(0, 100) + "..." }}</p>
-          <div v-if="items.classification_result === 0">
+          <p>{{ items.tweet_full_text.substring(0, 100) + "..." }}</p>
+          <div v-if="items.sentiment === 'negatif'">
             <b-badge pill variant="danger">Negatif</b-badge>
           </div>
           <div v-else>
@@ -56,7 +56,7 @@ export default {
   },
   created() {
     axios
-      .get('http://127.0.0.1:5000/tweet/timeline')
+      .get('http://34.136.214.191:5001/sentiment/daytoday/palestina')
       .then(
         response => {
           this.item = response.data.result
