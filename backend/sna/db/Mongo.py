@@ -407,7 +407,7 @@ class Database:
                     'total_sentiment': '$total'
                 }
             }, {
-                '$limit': 7
+                '$limit': 21
             }
         ]
 
