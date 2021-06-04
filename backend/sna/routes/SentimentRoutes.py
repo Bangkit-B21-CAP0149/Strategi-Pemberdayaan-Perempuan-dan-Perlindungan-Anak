@@ -14,11 +14,11 @@ import json
 db = MongoDB()
 redis_cache = Red()
 twitter_dump = 'twitter_dump2'
-db.initialize(twitter_dump)
 
 @cross_origin()
 @app.route('/sentiment/summary/<string:query>', methods=['GET'])
 def summary(query):
+    db.initialize(twitter_dump)
     try:
         cache_key = query + ' summary data cache'
         cache_data = redis_cache.get(cache_key)
@@ -56,6 +56,7 @@ def summary(query):
 @cross_origin()
 @app.route('/sentiment/daytoday/<string:query>', methods=['GET'])
 def daytoday(query):
+    db.initialize(twitter_dump)
     try:
         query = unquote(query)
         page = unquote(request.args.get('page', default='1', type=str))
@@ -70,6 +71,7 @@ def daytoday(query):
 @cross_origin()
 @app.route('/sentiment/tweetbyday/<string:query>', methods=['GET'])
 def tweetbyday(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' daily tweet count data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -84,6 +86,7 @@ def tweetbyday(query):
 @cross_origin()
 @app.route('/sentiment/countdailysentiment/<string:query>')
 def countdailysentiment(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' daily sentiment data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -99,6 +102,7 @@ def countdailysentiment(query):
 @cross_origin()
 @app.route('/sentiment/countdailylikes/<string:query>')
 def countdailylikes(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' daily likes data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -114,6 +118,7 @@ def countdailylikes(query):
 @cross_origin()
 @app.route('/sentiment/countdailyretweet/<string:query>')
 def countdailyretweet(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' daily likes data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -129,6 +134,7 @@ def countdailyretweet(query):
 @cross_origin()
 @app.route('/sentiment/countdailymentions/<string:query>')
 def countdailymentions(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' daily mentions data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -143,6 +149,7 @@ def countdailymentions(query):
 @cross_origin()
 @app.route('/sentiment/toptweet/<string:query>', methods=['GET'])
 def toptweet(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' top tweet data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -157,6 +164,7 @@ def toptweet(query):
 @cross_origin()
 @app.route('/sentiment/topprofile/<string:query>', methods=['GET'])
 def topprofile(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' top profile data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -171,6 +179,7 @@ def topprofile(query):
 @cross_origin()
 @app.route('/sentiment/tophashtag/<string:query>', methods=['GET'])
 def tophashtag(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' top hashtag data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -185,6 +194,7 @@ def tophashtag(query):
 @cross_origin()
 @app.route('/sentiment/sitestatistic/<string:query>', methods=['GET'])
 def sitestatistic(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' site statistic data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:
@@ -199,6 +209,7 @@ def sitestatistic(query):
 @cross_origin()
 @app.route('/sentiment/wordcloud/<string:query>')
 def wordcloud(query):
+    db.initialize(twitter_dump)
     cache_key = query + ' wordcloud data cache'
     cache_data = redis_cache.get(cache_key)
     if cache_data:

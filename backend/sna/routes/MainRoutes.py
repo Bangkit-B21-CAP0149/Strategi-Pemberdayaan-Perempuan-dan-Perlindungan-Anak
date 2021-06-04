@@ -15,12 +15,14 @@ db.initialize(twitter_dump)
 @cross_origin()
 @app.route('/main/keyword')
 def list_keyword():
+    db.initialize(twitter_dump)
     data = db.list_collection()
     return Response(json.dumps({'result': data}, cls=JSONEncoder), mimetype='application/json')
 
 @cross_origin()
 @app.route('/main/drop/<string:query>')
 def drop_keyword(query):
+    db.initialize(twitter_dump)
     try:
         db.drop_collection(query)
         return f'{query} deleted'
@@ -43,5 +45,3 @@ def getTweet(query):
     data = db.project(query, field={"tweet_created_at": 1, "tweet_full_text": 1, "user_screen_name": 1,
                                     "sentiment": 1})
     return json.dumps(list(data), cls=JSONEncoder)
-
-

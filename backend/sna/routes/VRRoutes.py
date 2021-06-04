@@ -12,17 +12,18 @@ db = MongoDB()
 classifier = VRClassifier()
 vr_dump = 'VR_dump'
 collection = 'reporting_data'
-db.initialize(vr_dump)
 
 @cross_origin
 @app.route('/vr/list_report')
 def list_report():
+    db.initialize(vr_dump)
     data = db.aggregate(collection)
     return Response(json.dumps({'result': list(data)}, cls=JSONEncoder), mimetype='application/json')
 
 @cross_origin
 @app.route('/vr/input_report', methods=['POST'])
 def input_report():
+    db.initialize(vr_dump)
     datelog = str(datetime.datetime.now())
     nik = request.form['nik']
     vt = request.form['violence_type']
